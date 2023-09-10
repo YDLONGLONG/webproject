@@ -1,5 +1,6 @@
 <template>
-  <div style="display: flex;">
+  <div style="display: flex;background-color: rgb(247,247,247);overflow-x: hidden;">
+  <!-- 左侧菜单 -->
     <el-menu default-active="1-4-1" class="el-menu-vertical-demo" :collapse="isCollapse">
       <el-submenu index="1">
         <template slot="title">
@@ -39,8 +40,8 @@
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
-
-    <div style="flex:1">
+<!-- 右侧数据 -->
+    <div style="flex:1;">
       <el-input placeholder="请输入内容"></el-input>
       <div class="box-list">
         <div class="box-list-two" v-for="item,i in boxListData" :key="i">
@@ -49,74 +50,82 @@
           <p>{{item.change}}</p>
         </div>
       </div>
-      <div class="box-list-three">
-        <div class="box-list-three-left" id="threeLeft"></div>
-        <div class="box-list-three-right" id="threeRight"></div>
-      </div>
-      <div class="box-list-three">
-        <div class="box-list-three-right" id="threeLeft1"></div>
-        <div class="box-list-three-left">
+      <el-row :gutter="20">
+        <el-col :span="10"><div class="box-list-box" id="threeLeft"></div></el-col>
+        <el-col :span="14"><div class="box-list-box" id="threeRight"></div></el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="14"><div id="threeLeft1" class="box-list-box"></div></el-col>
+        <el-col :span="10"><div class="box-list-box">
+          <h3 style="margin: 10px;">行业涨跌排名</h3>
           <el-table
             :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-            border
-            style="width: 90%;margin: 30px;">
+            border>
             <el-table-column
               prop="date"
-              label="日期"
+              label="行业名称"
               width="180">
             </el-table-column>
             <el-table-column
               prop="name"
-              label="姓名"
+              label="涨跌幅"
               width="180">
             </el-table-column>
             <el-table-column
               prop="address"
-              label="地址">
+              label="股份">
             </el-table-column>
           </el-table>
           <el-pagination
-          style="position: absolute; bottom: -250px;right: 250px;"
+            style="position: absolute;bottom: 10%;right: 16%;"
             background
             layout="prev, pager, next"
             :page-size="pageSize"
             :current-page.sync="currentPage"
             :total="tableData.length">
           </el-pagination>
-        </div>
-      </div>
-      <div class="box-list-three">
-        <div class="box-list-three-left1"  id="threeLeft2"></div>
-        <div class="box-list-three-right1">
+        </div></el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12"><div class="box-list-box" id="threeLeft2"></div></el-col>
+        <el-col :span="12"><div class="box-list-box">
+          <h3 style="margin: 10px;">个股涨跌榜</h3>
           <el-table
             :data="tableData1.slice((currentPage1-1)*pageSize1,currentPage1*pageSize1)"
-            border
-            style="width: 90%;margin: 40px;">
-            <el-table-column
-              prop="date"
-              label="日期"
-              width="180">
-            </el-table-column>
+            border>
             <el-table-column
               prop="name"
-              label="姓名"
+              label="公司名称"
               width="180">
             </el-table-column>
             <el-table-column
-              prop="address"
-              label="地址">
+              prop="code"
+              label="公司代码"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="price"
+              label="当前价格">
+            </el-table-column>
+            <el-table-column
+              prop="updown"
+              label="价格涨跌">
+            </el-table-column>
+            <el-table-column
+              prop="change"
+              label="涨跌幅">
             </el-table-column>
           </el-table>
           <el-pagination
-          style="position: absolute; bottom: -770px;right: 370px;"
+            style="position: absolute;bottom: 10%;right: 20%;"
             background
             layout="prev, pager, next"
             :page-size="pageSize1"
             :current-page.sync="currentPage1"
             :total="tableData1.length">
           </el-pagination>
-        </div>
-      </div>
+        </div></el-col>
+      </el-row>
     </div>
     
   </div>
@@ -171,94 +180,124 @@ export default {
           },
         ],
         tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          date: '石油石化',
+          name: '+0.65%',
+          address: '上海市普陀区'
         }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
+          date: '煤炭',
+          name: '+0.18%',
+          address: '上海市普陀区'
         }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
+          date: '社会服务',
+          name: '-0.03%',
+          address: '上海市普陀区'
         }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          date: '银行',
+          name: '-0.14%',
+          address: '上海市普陀区'
         }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          date: '通信',
+          name: '-0.56%',
+          address: '上海市普陀区'
         }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          date: '纺织服饰',
+          name: '-0.71%',
+          address: '上海市普陀区'
         }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          date: '金融',
+          name: '-0.72%',
+          address: '上海市普陀区'
         }],
         tableData1: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          name: '星星科技',
+          code:"11111",
+          price:"3.71",
+          updown:"+0.62%",
+          change:"+20.60%",
         }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
+          name: '职美信息',
+          code:"22222",
+          price:"15.71",
+          updown:"+2.62%",
+          change:"+20.02%",
         }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
+          name: '佼佼股份',
+          code:"33333",
+          price:"56.64",
+          updown:"+9.44%",
+          change:"+20.00%",
         }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          name: '华立科技',
+          code:"44444",
+          price:"24.67",
+          updown:"+4.11%",
+          change:"+19.99%",
         }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          name: '电声股份',
+          code:"55555",
+          price:"9.71",
+          updown:"+1.25%",
+          change:"+14.76%",
         }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          name: '华信科技',
+          code:"66666",
+          price:"13.34",
+          updown:"+1.68%",
+          change:"+14.41%",
         }, {
-          date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          code:"11111",
+          price:"3.71",
+          updown:"+0.00%",
+          change:"+0.00%",
         }, {
-          date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          code:"11111",
+          price:"3.71",
+          updown:"+0.00%",
+          change:"+0.00%",
         }, {
-          date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          code:"11111",
+          price:"3.71",
+          updown:"+0.00%",
+          change:"+0.00%",
         }, {
-          date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          code:"11111",
+          price:"3.71",
+          updown:"+0.00%",
+          change:"+0.00%",
         }, {
-          date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          code:"11111",
+          price:"3.71",
+          updown:"+0.00%",
+          change:"+0.00%",
         }, {
-          date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          code:"11111",
+          price:"3.71",
+          updown:"+0.00%",
+          change:"+0.00%",
         }, {
-          date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          code:"11111",
+          price:"3.71",
+          updown:"+0.00%",
+          change:"+0.00%",
         }, {
-          date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          code:"11111",
+          price:"3.71",
+          updown:"+0.00%",
+          change:"+0.00%",
         }, {
-          date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          code:"11111",
+          price:"3.71",
+          updown:"+0.00%",
+          change:"+0.00%",
         }]
       };
     },
@@ -266,14 +305,6 @@ export default {
 
     },
     mounted() {
-      //在浏览器宽度小于1200px时隐藏侧方导航栏菜单
-      window.onresize = () => {
-        if (document.documentElement.clientWidth < 1200) {
-          this.isCollapse = true;
-        }else {
-          this.isCollapse = false;
-        }
-      };
       this.threeLeft();
       this.threeRight();
       this.threeLeft1();
@@ -301,8 +332,8 @@ export default {
             }
           },
           title: {
-            left: 'center',
-            text: 'Large Ara Chart'
+            left: 'left',
+            text: '上证指数'
           },
           toolbox: {
             feature: {
@@ -397,105 +428,51 @@ export default {
         var myChart = echarts.init(chartDom);
         var option;
 
-        let xAxisData = [];
-        let data1 = [];
-        let data2 = [];
-        let data3 = [];
-        let data4 = [];
-        for (let i = 0; i < 10; i++) {
-          xAxisData.push('Class' + i);
-          data1.push(+(Math.random() * 2).toFixed(2));
-          data2.push(+(Math.random() * 5).toFixed(2));
-          data3.push(+(Math.random() + 0.3).toFixed(2));
-          data4.push(+Math.random().toFixed(2));
-        }
-        var emphasisStyle = {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowColor: 'rgba(0,0,0,0.3)'
-          }
-        };
         option = {
-          legend: {
-            data: ['bar', 'bar2', 'bar3', 'bar4'],
-            left: '10%'
-          },
-          brush: {
-            toolbox: ['rect', 'polygon', 'lineX', 'lineY', 'keep', 'clear'],
-            xAxisIndex: 0
-          },
-          toolbox: {
-            feature: {
-              magicType: {
-                type: ['stack']
-              },
-              dataView: {}
-            }
-          },
-          tooltip: {},
           xAxis: {
-            data: xAxisData,
-            name: 'X Axis',
-            axisLine: { onZero: true },
-            splitLine: { show: false },
-            splitArea: { show: false }
+            type: 'category',
+            data: ['行业1', '行业2', '行业3', '行业4', '行业5', '行业6', '行业7', '行业8', '行业9', '行业10', '行业11', '行业12', '行业13', '行业14', '行业15', '行业16']
           },
-          yAxis: {},
-          grid: {
-            bottom: 100
+          yAxis: {
+            type: 'value'
+          },
+          title: {
+            left: 'left',
+            text: '个股涨跌情况'
           },
           series: [
             {
-              name: 'bar',
-              type: 'bar',
-              stack: 'one',
-              emphasis: emphasisStyle,
-              data: data1
-            },
-            {
-              name: 'bar2',
-              type: 'bar',
-              stack: 'one',
-              emphasis: emphasisStyle,
-              data: data2
-            },
-            {
-              name: 'bar3',
-              type: 'bar',
-              stack: 'two',
-              emphasis: emphasisStyle,
-              data: data3
-            },
-            {
-              name: 'bar4',
-              type: 'bar',
-              stack: 'two',
-              emphasis: emphasisStyle,
-              data: data4
+              data: [
+              {
+                  value: 1,
+                  itemStyle: {
+                    color: 'red'
+                  }
+                },{
+                  value: 2,
+                  itemStyle: {
+                    color: 'red'
+                  }
+                },
+                -0.1,
+                -0.2,
+                -0.3,
+                -0.4,
+                -0.5,
+                -0.6,
+                -0.7,
+                -0.8,
+                -0.9,
+                -1,
+                -1.1,
+                -1.2,
+                -2,
+                -4,
+              ],
+              type: 'bar'
             }
           ]
         };
-        myChart.on('brushSelected', function (params) {
-          var brushed = [];
-          var brushComponent = params.batch[0];
-          for (var sIdx = 0; sIdx < brushComponent.selected.length; sIdx++) {
-            var rawIndices = brushComponent.selected[sIdx].dataIndex;
-            brushed.push('[Series ' + sIdx + '] ' + rawIndices.join(', '));
-          }
-          myChart.setOption({
-            title: {
-              backgroundColor: '#333',
-              text: 'SELECTED DATA INDICES: \n' + brushed.join('\n'),
-              bottom: 0,
-              right: '10%',
-              width: 100,
-              textStyle: {
-                fontSize: 12,
-                color: '#fff'
-              }
-            }
-          });
-        });
 
         option && myChart.setOption(option);
       },
@@ -507,26 +484,32 @@ export default {
         option = {
           xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: ['上涨', '平盘', '下跌', '停止']
           },
           yAxis: {
             type: 'value'
           },
+          title: {
+            left: 'left',
+            text: '个股涨跌情况'
+          },
           series: [
             {
               data: [
-                120,
-                {
-                  value: 200,
+              {
+                  value: 457,
                   itemStyle: {
-                    color: '#a90000'
+                    color: 'red'
                   }
                 },
-                150,
-                80,
-                70,
-                110,
-                130
+                57,
+                {
+                  value: 4537,
+                  itemStyle: {
+                    color: 'lightgreen'
+                  }
+                },
+                2,
               ],
               type: 'bar'
             }
@@ -544,9 +527,15 @@ export default {
   margin: 0;
   padding: 0;
 }
+/* 在浏览器宽度小于1200px时隐藏侧方导航栏菜单 */
+@media (max-width: 1200px) {
+    .el-menu-vertical-demo {
+        display: none;
+    }
+}
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
-    min-height: 400px;
+    height: 100%;
     margin-right: 10px;
   }
 .box-list{
@@ -570,31 +559,11 @@ export default {
 .box-list .box-list-two p{
   color:rgb(128,225,172);
 }
-.box-list-three{
-  display: flex;
-}
-.box-list-three-left{
-  width: 600px;
-  height: 500px;
-  border: 1px solid black;
+.box-list-box{
+  min-height: 500px;
+  background-color: #fff;
   margin: 10px;
-}
-.box-list-three-right{
-  width: 1000px;
-  height: 500px;
-  border: 1px solid black;
-  margin: 10px;
-}
-.box-list-three-left1{
-  width: 800px;
-  height: 500px;
-  border: 1px solid black;
-  margin: 10px;
-}
-.box-list-three-right1{
-  width: 800px;
-  height: 500px;
-  border: 1px solid black;
-  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
 }
 </style>
